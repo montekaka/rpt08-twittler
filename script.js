@@ -23,7 +23,7 @@ var loadTweets = function(tweets, $body, id, cb ){
 	for(var i = id; i < tweets.length; i++) {
 		var tweet = tweets[i];
 	  var $tweet = $('<div></div>');
-	  $tweet.text('@' + tweet.user + ': ' + tweet.message);
+	  $tweet.text('@' + tweet.user + ': ' + tweet.message + ' - ' +tweet.created_at);
 	  $tweet.appendTo($body);	      
 	  id += 1;				  
 	}
