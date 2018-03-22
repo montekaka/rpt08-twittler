@@ -10,9 +10,12 @@ $(document).ready(function(){
 	});	
 
 	$("div#refresh").click(function() {
-		console.log('hi')
 		refresh();
 	});		
+
+	setInterval(function(){
+		refresh();
+	}, 3000);
 });
 
 var loadTweets = function(tweets, $body, id, cb ){
@@ -28,7 +31,6 @@ var loadTweets = function(tweets, $body, id, cb ){
 }
 
 var refresh = function() {
-	
 	loadTweets(tweets, $body, tweetId, function(x) {
 		tweetId = x;
 	});		
