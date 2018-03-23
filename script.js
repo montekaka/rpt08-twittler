@@ -51,7 +51,7 @@ var loadTweets = function(tweets, feed){
 	  var $tweet = $('<div class="message"></div>');
 	  $tweet.text(tweet.message);
 	  var $tweet_created_at = $('<div class="created_at"></div>');
-	  $tweet_created_at.text(tweet.created_at);	  
+	  $tweet_created_at.text(timeago().format(tweet.created_at));	  
 	  var $user = $('<div class="user"></div>');
 
 	  $user.text('@' + tweet.user);
