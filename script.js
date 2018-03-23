@@ -1,22 +1,21 @@
-var tweetId = 0;
-var tweets;
-var $body;
+// var tweetId = 0;
+// var tweets;
+// var main_tweets;
+// var $body;
 
 $(document).ready(function(){		
-	$body = $('body');	
+	var $feed = $('div.feed');		
 	var main_tweets = streams.home;
-	var tweets = main_tweets;
+	//var tweets = main_tweets;
 	var selectedHome = true;
 	var selectedTab = "Home";
 
 	setTabName(selectedTab);
 
-	loadTweets(tweets, $body, tweetId, function(x) {
-		tweetId = x;
-	});	
+	loadTweets(main_tweets, $feed);	
 
 	$("div#refresh").click(function() {
-		refresh();
+		refresh(main_tweets, $feed);
 	});		
 
 
@@ -25,13 +24,8 @@ $(document).ready(function(){
 		var user = $(this).text();
 		selectedTab = user;
 		setTabName(selectedTab);		
-		var tweets = [];
-		for(var i = 0; i < main_tweets.length; i++) {
-			if("@"+main_tweets[i].user === user) {
-				tweets.push(main_tweets[i]);
-			}
-		}
-		tweetId = 0;
+		console.log(filterTweetOnUser(main_tweets, user));
+		//tweetId = 0;
 	})
 
 	// setInterval(function(){
@@ -39,9 +33,11 @@ $(document).ready(function(){
 	// }, 3000);
 });
 
-var loadTweets = function(tweets, $body, id, cb ){
+var loadTweets = function(tweets, feed){	
+	feed.html('');
 
-	for(var i = id; i < tweets.length; i++) {
+	for(var i = 0; i < tweets.length; i++) {
+		console.log()
 		var $div = $('<div class="tweet"></div>');
 
 		var tweet = tweets[i];
@@ -50,23 +46,31 @@ var loadTweets = function(tweets, $body, id, cb ){
 	  var $tweet_created_at = $('<div class="created_at"></div>');
 	  $tweet_created_at.text(tweet.created_at);	  
 	  var $user = $('<div class="user"></div>');
+
 	  $user.text('@' + tweet.user);
 
 	  $user.appendTo($div);	  
 		$tweet_created_at.appendTo($div);	  
 	  $tweet.appendTo($div);	      	  
-	  $div.appendTo($body);    
-	  id += 1;				  
+	  $div.appendTo(feed); 		  
 	}
-	cb(id);
+
 }
 
-var refresh = function() {
-	loadTweets(tweets, $body, tweetId, function(x) {
-		tweetId = x;
-	});		
+var refresh = function(main_tweets, feed) {
+	loadTweets(main_tweets, feed);		
 }
 
 var setTabName = function(tabname) {
 	$('div.tabname').text(tabname);
+}
+
+var filterTweetOnUser = function(main_tweets, user_name){
+	var user_tweets = [];
+	for(var i = 0; i < main_tweets.length; i++) {
+		if("@"+main_tweets[i].user === user_name) {
+			user_tweets.push(main_tweets[i]);
+		}
+	}
+	return user_tweets;
 }
