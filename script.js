@@ -16,7 +16,13 @@ $(document).ready(function(){
 	loadTweets(tweets, $feed);	
 
 	$("div#refresh").click(function() {
-		loadTweets(tweets, $feed);
+		console.log(tweets)
+		if(selectedHome) {		
+			loadTweets(tweets, $feed);
+		}	else {
+			tweets = filterTweetOnUser(main_tweets, selectedTab);
+			loadTweets(tweets, $feed);			
+		}	
 	});		
 
 	$(document).on('click', '.user', function(){
@@ -25,7 +31,6 @@ $(document).ready(function(){
 		selectedTab = user;
 		setTabName(selectedTab);		
 		var tweets = filterTweetOnUser(main_tweets, user);
-		console.log(tweets);
 		loadTweets(tweets, $feed);
 
 		//tweetId = 0;
