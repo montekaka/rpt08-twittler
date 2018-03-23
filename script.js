@@ -4,8 +4,8 @@
 // var $body;
 
 $(document).ready(function(){		
-	var $feed = $('div.feed');		
-	var main_tweets = streams.home;
+	var $feed = $('div.feed');
+	var main_tweets = streams;
 	// var tweets = main_tweets;
 	
 	var selectedHome = true;
@@ -13,15 +13,10 @@ $(document).ready(function(){
 
 	setTabName(selectedTab);
 
-	loadTweets(main_tweets, $feed);	
+	loadTweets(main_tweets, $feed, selectedHome, selectedTab);	
 
 	$("div#refresh").click(function() {
-		if(selectedHome) {		
-			loadTweets(main_tweets, $feed);
-		}	else {
-			var tweets = filterTweetOnUser(main_tweets, selectedTab);
-			loadTweets(tweets, $feed);			
-		}	
+		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
 	});		
 
 	$(document).on('click', '.user', function(){
@@ -29,8 +24,7 @@ $(document).ready(function(){
 		var user = $(this).text();
 		selectedTab = user;
 		setTabName(selectedTab);		
-		var tweets = filterTweetOnUser(main_tweets, user);
-		loadTweets(tweets, $feed);
+		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
 
 		//tweetId = 0;
 	})
@@ -40,9 +34,9 @@ $(document).ready(function(){
 	// }, 3000);
 });
 
-var loadTweets = function(tweets, feed){	
+var loadTweets = function(tweets, feed, selectedHome, selectedTab){	
 	feed.html('');
-	var tweets = sortTweetsByCreatedAt(tweets);
+	var tweets = fetchTweets(tweets, selectedHome, selectedTab);
 
 	for(var i = 0; i < tweets.length; i++) {
 		var $div = $('<div class="tweet"></div>');
@@ -68,15 +62,15 @@ var setTabName = function(tabname) {
 	$('div.tabname').text(tabname);
 }
 
-var filterTweetOnUser = function(main_tweets, user_name){
-	var user_tweets = [];
-	for(var i = 0; i < main_tweets.length; i++) {
-		if("@"+main_tweets[i].user === user_name) {
-			user_tweets.push(main_tweets[i]);
-		}
+var fetchTweets = function(tweets, selectedHome, selectedTab) {
+	if(selectedHome) {
+		return sortTweetsByCreatedAt(streams.home);
+	} else {
+		var userName = selectedTab.slice(1);
+		return sortTweetsByCreatedAt(streams.users[userName]);
 	}
-	return user_tweets;
 }
+
 
 var sortTweetsByCreatedAt = function(tweets) {
 	var tweets = tweets.sort(function(a, b) {
@@ -90,4 +84,9 @@ var sortTweetsByCreatedAt = function(tweets) {
 	});
 
 	return tweets;
+}
+
+
+var tweet = function(message, user_name) {
+
 }
