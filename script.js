@@ -6,21 +6,20 @@
 $(document).ready(function(){		
 	var $feed = $('div.feed');		
 	var main_tweets = streams.home;
-	var tweets = main_tweets;
+	// var tweets = main_tweets;
 	
 	var selectedHome = true;
 	var selectedTab = "Home";
 
 	setTabName(selectedTab);
 
-	loadTweets(tweets, $feed);	
+	loadTweets(main_tweets, $feed);	
 
 	$("div#refresh").click(function() {
-		console.log(tweets)
 		if(selectedHome) {		
-			loadTweets(tweets, $feed);
+			loadTweets(main_tweets, $feed);
 		}	else {
-			tweets = filterTweetOnUser(main_tweets, selectedTab);
+			var tweets = filterTweetOnUser(main_tweets, selectedTab);
 			loadTweets(tweets, $feed);			
 		}	
 	});		
@@ -43,6 +42,7 @@ $(document).ready(function(){
 
 var loadTweets = function(tweets, feed){	
 	feed.html('');
+	var tweets = sortTweetsByCreatedAt(tweets);
 
 	for(var i = 0; i < tweets.length; i++) {
 		var $div = $('<div class="tweet"></div>');
@@ -76,4 +76,18 @@ var filterTweetOnUser = function(main_tweets, user_name){
 		}
 	}
 	return user_tweets;
+}
+
+var sortTweetsByCreatedAt = function(tweets) {
+	var tweets = tweets.sort(function(a, b) {
+	  if (a.created_at > b.created_at) {
+	    return -1;
+	  }
+	  if (a.created_at < b.created_at){
+	    return 1;
+	  }
+	  return 0;			
+	});
+
+	return tweets;
 }
