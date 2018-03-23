@@ -6,25 +6,28 @@
 $(document).ready(function(){		
 	var $feed = $('div.feed');		
 	var main_tweets = streams.home;
-	//var tweets = main_tweets;
+	var tweets = main_tweets;
+	
 	var selectedHome = true;
 	var selectedTab = "Home";
 
 	setTabName(selectedTab);
 
-	loadTweets(main_tweets, $feed);	
+	loadTweets(tweets, $feed);	
 
 	$("div#refresh").click(function() {
-		refresh(main_tweets, $feed);
+		loadTweets(tweets, $feed);
 	});		
 
-
-	$('div.user').click(function(){
+	$(document).on('click', '.user', function(){
 		selectedHome = false;		
 		var user = $(this).text();
 		selectedTab = user;
 		setTabName(selectedTab);		
-		console.log(filterTweetOnUser(main_tweets, user));
+		var tweets = filterTweetOnUser(main_tweets, user);
+		console.log(tweets);
+		loadTweets(tweets, $feed);
+
 		//tweetId = 0;
 	})
 
@@ -37,7 +40,6 @@ var loadTweets = function(tweets, feed){
 	feed.html('');
 
 	for(var i = 0; i < tweets.length; i++) {
-		console.log()
 		var $div = $('<div class="tweet"></div>');
 
 		var tweet = tweets[i];
@@ -55,10 +57,6 @@ var loadTweets = function(tweets, feed){
 	  $div.appendTo(feed); 		  
 	}
 
-}
-
-var refresh = function(main_tweets, feed) {
-	loadTweets(main_tweets, feed);		
 }
 
 var setTabName = function(tabname) {
