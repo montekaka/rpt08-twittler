@@ -29,13 +29,20 @@ $(document).ready(function(){
 
 	$(document).on('click', '#home', function(){
 		selectedHome = true;		
-		setTabName("Home");		
+		setTabName("Home");
 		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
 	});	
 
-	setInterval(function(){
-		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
-	}, 3000);
+	$(document).on('click', '.save-tweet', function(){
+		var text = $('textarea.tweet-text').val();
+		var username = $('input.username').val();
+		$('textarea.tweet-text').val('');
+		$('input.username').val('');
+	});	
+
+	// setInterval(function(){
+	// 	loadTweets(main_tweets, $feed, selectedHome, selectedTab);
+	// }, 3000);
 });
 
 var loadTweets = function(tweets, feed, selectedHome, selectedTab){	
@@ -91,6 +98,8 @@ var sortTweetsByCreatedAt = function(tweets) {
 }
 
 
-var tweet = function(message, user_name) {
+var tweetFrom = function(message, username) {
+	if(message && username && message.length > 0 && username.length > 0) {
 
+	}
 }
