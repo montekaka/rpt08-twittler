@@ -38,6 +38,14 @@ $(document).ready(function(){
 		var username = $('input.username').val();
 		$('textarea.tweet-text').val('');
 		$('input.username').val('');
+		var newTweet = tweetFrom(text, username);
+		if(newTweet) {
+	  	var username = newTweet.user;
+	  	if(!streams.users[username]) { streams.users[username] = [];}			
+  		streams.users[username].push(newTweet);
+  		streams.home.push(newTweet);	  		
+  		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
+		}
 	});	
 
 	// setInterval(function(){
@@ -75,10 +83,10 @@ var setTabName = function(tabname) {
 
 var fetchTweets = function(tweets, selectedHome, selectedTab) {
 	if(selectedHome) {
-		return sortTweetsByCreatedAt(streams.home);
+		return sortTweetsByCreatedAt(tweets.home);
 	} else {
 		var userName = selectedTab.slice(1);
-		return sortTweetsByCreatedAt(streams.users[userName]);
+		return sortTweetsByCreatedAt(tweets.users[userName]);
 	}
 }
 
@@ -98,8 +106,12 @@ var sortTweetsByCreatedAt = function(tweets) {
 }
 
 
-var tweetFrom = function(message, username) {
+var tweetFrom = function(message, username ) {
 	if(message && username && message.length > 0 && username.length > 0) {
-
+		var newTweet = {};
+		newTweet.user = username;
+		newTweet.message = message;
+		newTweet.created_at = new Date();
+		return newTweet;
 	}
 }
