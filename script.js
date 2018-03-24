@@ -25,13 +25,17 @@ $(document).ready(function(){
 		selectedTab = user;
 		setTabName(selectedTab);		
 		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
+	});
 
-		//tweetId = 0;
-	})
+	$(document).on('click', '#home', function(){
+		selectedHome = true;		
+		setTabName("Home");		
+		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
+	});	
 
-	// setInterval(function(){
-	// 	refresh();
-	// }, 3000);
+	setInterval(function(){
+		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
+	}, 3000);
 });
 
 var loadTweets = function(tweets, feed, selectedHome, selectedTab){	
