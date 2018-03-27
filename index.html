@@ -6,13 +6,18 @@
     <script src="timeago.min.js"></script>
     <script src="script.js"></script>
   </head>
-  <body>  	
-    <div id="refresh">reload</div>     
-    <div class="tabname">Tweets</div>  
+  <body>
+  	<div class="header">
+	  	<div id="app-title" class="floating-block">Home</div>
+	    <!-- <div id="refresh" class="floating-block">reload</div>    -->    		
+  	</div>
+    <!-- <div class="tabname">Tweets</div> -->  
     <div id="home">Home</div> 
     <div class="create-tweet">
     	<textarea rows="4" class="tweet-text"></textarea>
-    	username: <input type="text" class="username" name="name">
+    	<div class="floating-block">
+    		username: <input type="text" class="username" name="name">
+    	</div class="floating-block">    	
     	<div class="save-tweet">Tweet</div>
     </div>
     <div class="feed"></div>
@@ -20,10 +25,24 @@
   <style type="text/css">
 	  body {
 	  	color: #DBE1E5;
+	  	background: #413E42;
+	  }
+
+	  .create-tweet {
+	  	margin-bottom: 40px;
 	  }
   	.message {
 			color: #413E42;		
 			font-size: 20px;
+		}
+
+		.floating-block {
+			float: left;
+			margin-right: 20px;
+		}
+
+		#app-title{
+			font-size: 46px;
 		}
 
 		.tweet {

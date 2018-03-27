@@ -7,7 +7,7 @@ $(document).ready(function(){
 	var $feed = $('div.feed');
 	var main_tweets = streams;
 	// var tweets = main_tweets;
-	
+	$('div#home').hide();
 	var selectedHome = true;
 	var selectedTab = "Home";
 
@@ -25,11 +25,13 @@ $(document).ready(function(){
 		selectedTab = user;
 		setTabName(selectedTab);		
 		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
+		$('div#home').show();
 	});
 
 	$(document).on('click', '#home', function(){
 		selectedHome = true;		
 		setTabName("Home");
+		$('div#home').hide();
 		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
 	});	
 
@@ -48,9 +50,9 @@ $(document).ready(function(){
 		}
 	});	
 
-	// setInterval(function(){
-	// 	loadTweets(main_tweets, $feed, selectedHome, selectedTab);
-	// }, 3000);
+	setInterval(function(){
+		loadTweets(main_tweets, $feed, selectedHome, selectedTab);
+	}, 3000);
 });
 
 var loadTweets = function(tweets, feed, selectedHome, selectedTab){	
@@ -78,7 +80,8 @@ var loadTweets = function(tweets, feed, selectedHome, selectedTab){
 }
 
 var setTabName = function(tabname) {
-	$('div.tabname').text(tabname);
+	// $('div.tabname').text(tabname);
+	$('div#app-title').text(tabname);
 }
 
 var fetchTweets = function(tweets, selectedHome, selectedTab) {
